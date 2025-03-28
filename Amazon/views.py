@@ -169,7 +169,7 @@ def payment_success(request):
 def stripe_webhook(request):
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
-    endpoint_secret = "whsec_z7cWZEVVv7ecsLGqwiBuAtE4X8PBtvk4"
+    endpoint_secret = " "
     try:
         event = stripe.Webhook.construct_event(
             payload, sig_header, endpoint_secret
