@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block content%}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Welcome to MinimalShop</h1>
+    <p>Discover high-quality products at unbeatable prices.</p>
+    <a href="#products" class="btn">Explore Products</a>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section id="products" class="products">
+  <h2>Featured Products</h2>
+  <div class="product-grid">
+    <!-- Product Cards -->
+
+    {% for product in products%} {% if product.is_sale %}
+    <div class="product-card">
+      <div class="sale-badge">Sale!</div>
+      <img src="{{ product.image.url }}" alt="Product 1" />
+      <h3>{{ product.name }}</h3>
+      <strike>${{ product.price }}</strike>
+      &nbsp; ${{ product.sale_price }}
+      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary"
+        >Add to Cart</a
+      >
+    </div>
+    {% else %}
+    <div class="product-card">
+      <img src="{{ product.image.url }}" alt="Product 1" />
+      <h3>{{ product.name }}</h3>
+      ${{ product.price }}
+      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary"
+        >Add to Cart</a
+      >
+    </div>
+    {% endif %} {% endfor%}
+  </div>
+</section>
+{% endblock%}

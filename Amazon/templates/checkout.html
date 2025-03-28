@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block content %}
+<div style="max-width: 800px; margin: auto; text-align: center; padding: 20px">
+  <h2 style="margin-bottom: 20px; font-size: 28px; color: #333">
+    Checkout Summary
+  </h2>
+
+  {% if cart_items and cart_items|length > 0 %}
+  <table
+    border="1"
+    style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+  >
+    <thead>
+      <tr style="background-color: #f4f4f4; font-weight: bold">
+        <th style="padding: 12px">Product</th>
+        <th style="padding: 12px">Quantity</th>
+        <th style="padding: 12px">Price</th>
+        <th style="padding: 12px">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td style="padding: 12px">{{ item.name }}</td>
+        <td style="padding: 12px">{{ item.quantity }}</td>
+        <td style="padding: 12px">₹{{ item.price }}</td>
+        <td style="padding: 12px">₹{{ item.total_price }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px">
+    Total Amount: ₹{{ total_price }}
+  </p>
+
+  <button type="submit">Confirm & Pay</button>
+
+  {% else %}
+  <p style="font-size: 18px; color: #666">Your cart is empty.</p>
+  <a href="{% url 'home' %}" class="button">Continue Shopping</a>
+  {% endif %}
+</div>
+{% endblock %}

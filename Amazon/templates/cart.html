@@ -1,0 +1,135 @@
+{% extends "base.html" %} {% block content %}
+<div style="max-width: 900px; margin: auto; text-align: center; padding: 20px">
+  <h2 style="margin-bottom: 20px; font-size: 28px; color: #333">
+    Shopping Cart
+  </h2>
+
+  {% if cart_items %}
+  <table
+    border="1"
+    style="
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    "
+  >
+    <thead>
+      <tr style="background-color: #f4f4f4; font-weight: bold">
+        <th style="padding: 12px">Product</th>
+        <th style="padding: 12px">Price</th>
+        <th style="padding: 12px">Quantity</th>
+        <th style="padding: 12px">Total</th>
+        <th style="padding: 12px">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr style="border-bottom: 1px solid #ddd; transition: 0.3s">
+        <td style="padding: 12px">{{ item.name }}</td>
+        <td style="padding: 12px">${{ item.price }}</td>
+        <td style="padding: 12px">{{ item.quantity }}</td>
+        <td style="padding: 12px">${{ item.total_price }}</td>
+        <td style="padding: 12px">
+          {% if item.id %}
+          <a
+            href="{% url 'remove_from_cart' item.id %}"
+            style="
+              color: red;
+              text-decoration: none;
+              font-weight: bold;
+              transition: 0.3s;
+            "
+            onmouseover="this.style.color='#d32f2f'"
+            onmouseout="this.style.color='red'"
+            >Remove</a
+          >
+          {% else %}
+          <span style="color: gray">Error: No ID</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px">
+    Total Price: ${{ total_price }}
+  </p>
+
+  <!-- Checkout Button -->
+  <form action="{% url 'checkout' %}" method="POST">
+    {% csrf_token %}
+    <button
+      type="submit"
+      style="
+        background-color: #28a745;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        display: inline-block;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      "
+      onmouseover="this.style.backgroundColor='#218838'"
+      onmouseout="this.style.backgroundColor='#28a745'"
+    >
+      Proceed to Checkout
+    </button>
+  </form>
+
+  <!-- Clear Cart Button -->
+  <form action="{% url 'clear_cart' %}" method="post" style="margin-top: 10px">
+    {% csrf_token %}
+    <button
+      type="submit"
+      style="
+        background-color: #dc3545;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        display: inline-block;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      "
+      onmouseover="this.style.backgroundColor='#c82333'"
+      onmouseout="this.style.backgroundColor='#dc3545'"
+    >
+      Clear Cart
+    </button>
+  </form>
+
+  {% else %}
+  <p style="font-size: 18px; color: #666">Your cart is empty.</p>
+  {% endif %}
+
+  <a
+    href="{% url 'home' %}"
+    style="
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: 0.3s;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    "
+    onmouseover="this.style.backgroundColor='#0056b3'"
+    onmouseout="this.style.backgroundColor='#007bff'"
+  >
+    Continue Shopping
+  </a>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<header>
+  <nav>
+    <!-- Logo on the Left -->
+    <div class="logo">MinimalShop</div>
+
+    <!-- Nav Links in the Center -->
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'register' %}">Register</a></li>
+
+      {% endif %}
+    </ul>
+
+    <!-- Cart Button on the Right -->
+      <a href="{% url 'cart' %}" class="btn btn-outline-light">
+        Cart <span id="cart-count">({{ request.session.cart|length }})</span>
+    </a>
+      <span id="cart-count">0</span>
+    </div>
+  </nav>
+</header>
